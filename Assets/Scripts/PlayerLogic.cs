@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerLogic : MonoBehaviour
 {
@@ -14,8 +15,10 @@ public class PlayerLogic : MonoBehaviour
     float speed;
     [SerializeField]
     GameObject gameWonPanel;
+    [SerializeField]
+    GameObject gameOverPanel;
 
-    private bool isGameWon = false;
+    private bool isGameOver = false;
 
     private void Awake()
     {
@@ -24,7 +27,7 @@ public class PlayerLogic : MonoBehaviour
 
     void Update()
     {
-        if (isGameWon)
+        if (isGameOver)
         {
             return;
         }
@@ -45,8 +48,25 @@ public class PlayerLogic : MonoBehaviour
         if(collision.tag == "Door")
         {
             Debug.Log("GG mate, YOU WON");
-            isGameWon = true;
+            isGameOver = true;
             gameWonPanel.SetActive(true);
         }
+        else if (collision.tag == "Enemy")
+        {
+            Debug.Log("OOPS, YOU OVER");
+            isGameOver = true;
+            gameOverPanel.SetActive(true);
+        }
+
+    }
+
+    public void RestartButton()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    public void QuitButton()
+    {
+        Application.Quit();
     }
 }
