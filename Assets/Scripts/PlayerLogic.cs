@@ -12,6 +12,10 @@ public class PlayerLogic : MonoBehaviour
 
     [SerializeField]
     float speed;
+    [SerializeField]
+    GameObject gameWonPanel;
+
+    private bool isGameWon = false;
 
     private void Awake()
     {
@@ -20,6 +24,10 @@ public class PlayerLogic : MonoBehaviour
 
     void Update()
     {
+        if (isGameWon)
+        {
+            return;
+        }
         xInput = Input.GetAxisRaw("Horizontal");
         yInput = Input.GetAxisRaw("Vertical");
         movementInput = new Vector2(xInput, yInput);
@@ -37,6 +45,8 @@ public class PlayerLogic : MonoBehaviour
         if(collision.tag == "Door")
         {
             Debug.Log("GG mate, YOU WON");
+            isGameWon = true;
+            gameWonPanel.SetActive(true);
         }
     }
 }
